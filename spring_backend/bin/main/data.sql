@@ -19,13 +19,13 @@ VALUES
     ('2ebf301e-6c61-4076-98e3-2a38b31daf86', 'DEFAULT'),
     ('76d2cbf6-5845-470e-ad5f-2edb9e09a868', 'USER_MODIFY'),
     ('21c942db-a275-43f8-bdd6-d048c21bf5ab', 'USER_DELETE'),
-    ('1a2b3c4d-5678-90ab-cdef-123456789001', 'USER_CREATE'),
-    ('1a2b3c4d-5678-90ab-cdef-123456789002', 'USER_READ'),
-    ('1a2b3c4d-5678-90ab-cdef-123456789003', 'USER_UPDATE'),
-    ('1a2b3c4d-5678-90ab-cdef-123456789004', 'CATEGORY_MANAGE'),
-    ('1a2b3c4d-5678-90ab-cdef-123456789005', 'LIST_MANAGE'),
-    ('1a2b3c4d-5678-90ab-cdef-123456789006', 'PROFILE_EDIT'),
-    ('1a2b3c4d-5678-90ab-cdef-123456789007', 'USER_DEACTIVATE')
+    ('a1b2c3d4-e5f6-7890-ab12-cd34ef56ab78', 'USER_CREATE'),
+    ('b2c3d4e5-f678-9012-abcd-34ef56ab7890', 'USER_READ'),
+    ('c3d4e5f6-7890-12ab-cd34-ef56ab789012', 'USER_UPDATE'),
+    ('d4e5f678-9012-abcd-34ef-56ab78901234', 'CATEGORY_MANAGE'),
+    ('e5f67890-12ab-cd34-ef56-ab7890123456', 'LIST_MANAGE'),
+    ('f6789012-abcd-34ef-56ab-789012345678', 'PROFILE_EDIT'),
+    ('67890123-4bcd-5ef6-7890-123456789abc', 'USER_DEACTIVATE')
     ON CONFLICT DO NOTHING;
 
 -- ASSIGN ROLES TO USERS
@@ -40,17 +40,17 @@ VALUES
 -- ASSIGN AUTHORITIES TO ROLES
 INSERT INTO role_authority (role_id, authority_id)
 VALUES
--- User bleibt mit bisherigen Authorities
+-- User behält bestehende Authorities
 ('d29e709c-0ff1-4f4c-a7ef-09f656c390f1', '2ebf301e-6c61-4076-98e3-2a38b31daf86'),
 ('c6aee32d-8c35-4481-8b3e-a876a39b0c02', '21c942db-a275-43f8-bdd6-d048c21bf5ab'),
 
 -- Admin bekommt alle Authorities
 ('ab505c92-7280-49fd-a7de-258e618df074', '76d2cbf6-5845-470e-ad5f-2edb9e09a868'),
-('ab505c92-7280-49fd-a7de-258e618df074', '1a2b3c4d-5678-90ab-cdef-123456789001'),
-('ab505c92-7280-49fd-a7de-258e618df074', '1a2b3c4d-5678-90ab-cdef-123456789002'),
-('ab505c92-7280-49fd-a7de-258e618df074', '1a2b3c4d-5678-90ab-cdef-123456789003'),
-('ab505c92-7280-49fd-a7de-258e618df074', '1a2b3c4d-5678-90ab-cdef-123456789004'),
-('ab505c92-7280-49fd-a7de-258e618df074', '1a2b3c4d-5678-90ab-cdef-123456789005'),
-('ab505c92-7280-49fd-a7de-258e618df074', '1a2b3c4d-5678-90ab-cdef-123456789006'),
-('ab505c92-7280-49fd-a7de-258e618df074', '1a2b3c4d-5678-90ab-cdef-123456789007')
+('ab505c92-7280-49fd-a7de-258e618df074', 'a1b2c3d4-e5f6-7890-ab12-cd34ef56ab78'),
+('ab505c92-7280-49fd-a7de-258e618df074', 'b2c3d4e5-f678-9012-abcd-34ef56ab7890'),
+('ab505c92-7280-49fd-a7de-258e618df074', 'c3d4e5f6-7890-12ab-cd34-ef56ab789012'),
+('ab505c92-7280-49fd-a7de-258e618df074', 'd4e5f678-9012-abcd-34ef-56ab78901234'),
+('ab505c92-7280-49fd-a7de-258e618df074', 'e5f67890-12ab-cd34-ef56-ab7890123456'),
+('ab505c92-7280-49fd-a7de-258e618df074', 'f6789012-abcd-34ef-56ab-789012345678'),
+('ab505c92-7280-49fd-a7de-258e618df074', '67890123-4bcd-5ef6-7890-123456789abc')
     ON CONFLICT DO NOTHING;
