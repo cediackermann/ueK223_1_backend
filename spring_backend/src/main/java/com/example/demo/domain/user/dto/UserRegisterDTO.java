@@ -1,6 +1,8 @@
 package com.example.demo.domain.user.dto;
 
 import com.example.demo.core.generic.AbstractDTO;
+import com.example.demo.domain.userprofile.dto.UserProfileDTO;
+
 import java.util.UUID;
 import jakarta.validation.constraints.Email;
 import lombok.Getter;
@@ -14,6 +16,8 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class UserRegisterDTO extends AbstractDTO {
 
+  private UserProfileDTO userProfile;
+
   private String firstName;
 
   private String lastName;
@@ -23,12 +27,14 @@ public class UserRegisterDTO extends AbstractDTO {
 
   private String password;
 
-  public UserRegisterDTO(UUID id, String firstName, String lastName, String email, String password) {
+  public UserRegisterDTO(UUID id, String firstName, String lastName, String email, String password,
+      UserProfileDTO userProfile) {
     super(id);
     this.firstName = firstName;
     this.lastName = lastName;
     this.email = email;
     this.password = password;
+    this.userProfile = userProfile;
   }
 
 }

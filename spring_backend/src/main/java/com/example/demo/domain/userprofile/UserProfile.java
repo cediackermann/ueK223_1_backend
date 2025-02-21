@@ -6,8 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
-import org.springframework.http.HttpStatusCode;
-import org.springframework.validation.annotation.Validated;
 
 import java.time.LocalDate;
 import java.time.Period;
@@ -19,7 +17,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @Accessors(chain = true)
-public class UserProfile extends AbstractEntity  {
+public class UserProfile extends AbstractEntity {
 
     @Column(name = "address")
     private String address;
@@ -34,8 +32,11 @@ public class UserProfile extends AbstractEntity  {
     private int age;
 
     @PostPersist
+    @PostLoad
+    @PostUpdate
+    @PostRemove
     public void calculateAge() {
-        this.age =  Period.between(birthDate, LocalDate.now()).getYears();
+        this.age = Period.between(birthDate, LocalDate.now()).getYears();
     }
 
     public UserProfile(UUID id, String address, LocalDate birthDate, String profilePictureUrl) {

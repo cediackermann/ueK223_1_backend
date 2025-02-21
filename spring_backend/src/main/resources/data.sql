@@ -1,7 +1,13 @@
+-- UserProfiles
+INSERT INTO user_profiles (id, address, birth_date, profile_picture_url)
+VALUES ('ba804cb9-fa14-42a5-afaf-be488742fc54', '1234 Main St, Springfield, IL 62701', '1990-01-01', 'james_bond.jpg'),
+       ('0d8fa44c-54fd-4cd0-ace9-2a7da57992de', '1234 Main St, Springfield, IL 62701', '1990-01-01', 'tyler_durden.jpg')
+    ON CONFLICT DO NOTHING;
+
 -- USERS
-INSERT INTO users (id, email, first_name, last_name, password)
-VALUES ('ba804cb9-fa14-42a5-afaf-be488742fc54', 'admin@example.com', 'James', 'Bond', '$2a$10$TM3PAYG3b.H98cbRrHqWa.BM7YyCqV92e/kUTBfj85AjayxGZU7d6'), -- Password: 1234
-       ('0d8fa44c-54fd-4cd0-ace9-2a7da57992de', 'user@example.com', 'Tyler', 'Durden', '$2a$10$TM3PAYG3b.H98cbRrHqWa.BM7YyCqV92e/kUTBfj85AjayxGZU7d6') -- Password: 1234
+INSERT INTO users (id, email, first_name, last_name, password, user_profile_id)
+VALUES ('ba804cb9-fa14-42a5-afaf-be488742fc54', 'admin@example.com', 'James', 'Bond', '$2a$10$TM3PAYG3b.H98cbRrHqWa.BM7YyCqV92e/kUTBfj85AjayxGZU7d6', 'ba804cb9-fa14-42a5-afaf-be488742fc54'), -- Password: 1234
+       ('0d8fa44c-54fd-4cd0-ace9-2a7da57992de', 'user@example.com', 'Tyler', 'Durden', '$2a$10$TM3PAYG3b.H98cbRrHqWa.BM7YyCqV92e/kUTBfj85AjayxGZU7d6', '0d8fa44c-54fd-4cd0-ace9-2a7da57992de') -- Password: 1234
     ON CONFLICT DO NOTHING;
 
 -- ROLES
