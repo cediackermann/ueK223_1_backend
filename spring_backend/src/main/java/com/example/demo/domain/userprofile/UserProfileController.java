@@ -4,6 +4,7 @@ import com.example.demo.domain.userprofile.dto.UserProfileDTO;
 import com.example.demo.domain.userprofile.dto.UserProfileMapper;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -26,7 +27,7 @@ public class UserProfileController {
         this.userProfileMapper = userProfileMapper;
     }
 
-    @PostMapping("/")
+    @PostMapping({ "", "/" })
     @PreAuthorize("hasAuthority('USER_PROFILE_CREATE')")
     public ResponseEntity<UserProfile> getUserProfile(@Valid @RequestBody UserProfileDTO userProfileDTO) {
         return new ResponseEntity<>(userProfileService.save(userProfileMapper.fromUserProfileDTO(userProfileDTO)),
@@ -35,8 +36,8 @@ public class UserProfileController {
 
     @GetMapping({ "", "/" })
     @PreAuthorize("hasAuthority('USER_PROFILE_LIST_READ')")
-    public ResponseEntity<List<UserProfile>> getUserProfiles() {
-        return new ResponseEntity<>(userProfileService.findAll(), HttpStatus.OK);
+    public ResponseEntity<List<UserProfile>> getUserProfiles(@RequestParam(required = true) Pageable pageable) {
+        return new ResponseEntity<>(userProfileService.findAll(pageable), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
