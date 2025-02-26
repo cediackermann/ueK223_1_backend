@@ -22,13 +22,8 @@ INSERT INTO authority (id, name)
 VALUES ('2ebf301e-6c61-4076-98e3-2a38b31daf86', 'DEFAULT'),
        ('76d2cbf6-5845-470e-ad5f-2edb9e09a868', 'USER_MODIFY'),
        ('21c942db-a275-43f8-bdd6-d048c21bf5ab', 'USER_DELETE'),
-       ('3a1b2c3d-4e5f-6789-abcd-ef0123456789', 'USER_CREATE'),
-       ('4b2c3d4e-5f6a-789b-cdef-0123456789ab', 'USER_READ'),
-       ('5c3d4e5f-6a7b-89cd-ef01-23456789abcd', 'USER_UPDATE'),
-       ('6d4e5f6a-7b8c-9def-0123-456789abcdef', 'CATEGORY_MANAGE'),
-       ('7e5f6a7b-8c9d-ef01-2345-6789abcdef01', 'LIST_MANAGE'),
-       ('8f6a7b8c-9d0e-f123-4567-89abcdef0123', 'PROFILE_EDIT'),
-       ('9a7b8c9d-0e1f-2345-6789-abcdef012345', 'USER_DEACTIVATE')
+       ('7e5f6a7b-8c9d-ef01-2345-6789abcdef01', 'USER_PROFILE_READ'),
+       ('8f6a7b8c-9d0e-f123-4567-89abcdef0123', 'USER_PROFILE_MODIFY'),
     ON CONFLICT DO NOTHING;
 
 -- ASSIGN ROLES TO USERS
