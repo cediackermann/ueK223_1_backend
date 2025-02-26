@@ -22,8 +22,10 @@ INSERT INTO authority (id, name)
 VALUES ('2ebf301e-6c61-4076-98e3-2a38b31daf86', 'DEFAULT'),
        ('76d2cbf6-5845-470e-ad5f-2edb9e09a868', 'USER_MODIFY'),
        ('21c942db-a275-43f8-bdd6-d048c21bf5ab', 'USER_DELETE'),
+       ('9a7b8c9d-0e1f-2345-6789-abcdef012345', 'USER_PROFILE_CREATE'),
        ('7e5f6a7b-8c9d-ef01-2345-6789abcdef01', 'USER_PROFILE_READ'),
        ('8f6a7b8c-9d0e-f123-4567-89abcdef0123', 'USER_PROFILE_MODIFY'),
+       ('26ffc98a-0e2c-4bb2-a083-f1bef04b6699', 'USER_PROFILE_LIST_READ')
     ON CONFLICT DO NOTHING;
 
 -- ASSIGN ROLES TO USERS
@@ -36,14 +38,13 @@ VALUES ('ba804cb9-fa14-42a5-afaf-be488742fc54', 'd29e709c-0ff1-4f4c-a7ef-09f656c
 
 -- ASSIGN AUTHORITIES TO ROLES
 INSERT INTO role_authority (role_id, authority_id)
-VALUES ('d29e709c-0ff1-4f4c-a7ef-09f656c390f1', '2ebf301e-6c61-4076-98e3-2a38b31daf86'),
-       ('ab505c92-7280-49fd-a7de-258e618df074', '76d2cbf6-5845-470e-ad5f-2edb9e09a868'),
-       ('c6aee32d-8c35-4481-8b3e-a876a39b0c02', '21c942db-a275-43f8-bdd6-d048c21bf5ab'),
-       ('ab505c92-7280-49fd-a7de-258e618df074', '3a1b2c3d-4e5f-6789-abcd-ef0123456789'),
-       ('ab505c92-7280-49fd-a7de-258e618df074', '4b2c3d4e-5f6a-789b-cdef-0123456789ab'),
-       ('ab505c92-7280-49fd-a7de-258e618df074', '5c3d4e5f-6a7b-89cd-ef01-23456789abcd'),
-       ('ab505c92-7280-49fd-a7de-258e618df074', '6d4e5f6a-7b8c-9def-0123-456789abcdef'),
-       ('ab505c92-7280-49fd-a7de-258e618df074', '7e5f6a7b-8c9d-ef01-2345-6789abcdef01'),
-       ('ab505c92-7280-49fd-a7de-258e618df074', '8f6a7b8c-9d0e-f123-4567-89abcdef0123'),
-       ('ab505c92-7280-49fd-a7de-258e618df074', '9a7b8c9d-0e1f-2345-6789-abcdef012345')
+VALUES ('d29e709c-0ff1-4f4c-a7ef-09f656c390f1', '2ebf301e-6c61-4076-98e3-2a38b31daf86'), -- DEFAULT, DEFAULT
+       ('ab505c92-7280-49fd-a7de-258e618df074', '76d2cbf6-5845-470e-ad5f-2edb9e09a868'), -- ADMIN, USER_MODIFY
+       ('ab505c92-7280-49fd-a7de-258e618df074', '9a7b8c9d-0e1f-2345-6789-abcdef012345'), -- ADMIN, USER_PROFILE_CREATE
+       ('ab505c92-7280-49fd-a7de-258e618df074', '7e5f6a7b-8c9d-ef01-2345-6789abcdef01'), -- ADMIN, USER_PROFILE_READ
+       ('ab505c92-7280-49fd-a7de-258e618df074', '8f6a7b8c-9d0e-f123-4567-89abcdef0123'), -- ADMIN, USER_PROFILE_MODIFY
+       ('ab505c92-7280-49fd-a7de-258e618df074', '26ffc98a-0e2c-4bb2-a083-f1bef04b6699'), -- ADMIN, USER_PROFILE_LIST_READ
+       ('c6aee32d-8c35-4481-8b3e-a876a39b0c02', '21c942db-a275-43f8-bdd6-d048c21bf5ab'), -- USER, USER_DELETE
+       ('c6aee32d-8c35-4481-8b3e-a876a39b0c02', '7e5f6a7b-8c9d-ef01-2345-6789abcdef01'), -- USER, USER_PROFILE_READ
+       ('c6aee32d-8c35-4481-8b3e-a876a39b0c02', '8f6a7b8c-9d0e-f123-4567-89abcdef0123') -- USER, USER_PROFILE_MODIFY
     ON CONFLICT DO NOTHING;
