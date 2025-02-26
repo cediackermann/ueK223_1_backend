@@ -40,17 +40,17 @@ public class WebSecurityConfig {
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     return http.authorizeHttpRequests(
-        requests -> requests.requestMatchers(HttpMethod.POST, "/user/login", "/user/register", "/userprofile/").permitAll()
-                            .requestMatchers(HttpMethod.GET, "/v3/api-docs","/v3/api-docs/swagger-config","/swagger-ui/*", "/user/*", "/userprofile/").permitAll()
-                            .anyRequest().authenticated())
-            .addFilterAfter(new JWTAuthenticationFilter(new AntPathRequestMatcher("/user/login", "POST"),
-                    authenticationManager(), jwtProperties), UsernamePasswordAuthenticationFilter.class)
-            .addFilterAfter(new JWTAuthorizationFilter(userService, jwtProperties),
-                    UsernamePasswordAuthenticationFilter.class)
-            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-            .csrf(csrf -> csrf.disable())
-            .build();
+        requests -> requests.requestMatchers(HttpMethod.POST, "/user/login", "/user/register").permitAll()
+            .requestMatchers(HttpMethod.GET, "/v3/api-docs", "/v3/api-docs/swagger-config", "/swagger-ui/*").permitAll()
+            .anyRequest().authenticated())
+        .addFilterAfter(new JWTAuthenticationFilter(new AntPathRequestMatcher("/user/login", "POST"),
+            authenticationManager(), jwtProperties), UsernamePasswordAuthenticationFilter.class)
+        .addFilterAfter(new JWTAuthorizationFilter(userService, jwtProperties),
+            UsernamePasswordAuthenticationFilter.class)
+        .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+        .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+        .csrf(csrf -> csrf.disable())
+        .build();
   }
 
   @Bean
@@ -72,6 +72,5 @@ public class WebSecurityConfig {
     provider.setUserDetailsService(userService);
     return new ProviderManager(provider);
   }
-
 
 }
