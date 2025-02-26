@@ -36,22 +36,23 @@ public class UserProfileController {
 
     @GetMapping({ "", "/" })
     @PreAuthorize("hasAuthority('USER_PROFILE_LIST_READ')")
-    public ResponseEntity<List<UserProfile>> getUserProfiles(@RequestParam(required = true) Pageable pageable) {
-        return new ResponseEntity<>(userProfileService.findAll(pageable), HttpStatus.OK);
+    public ResponseEntity<List<UserProfileDTO>> getUserProfiles(Pageable pageable) {
+        return new ResponseEntity<>(userProfileMapper.toDtoList(userProfileService.findAll(pageable)), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("(hasAuthority('USER_PROFILE_READ') && @userProfilePermissionEvaluator.userProfileEvaluator(authentication.principal.user,#id)) || hasAuthority('USER_PROFILE_LIST_READ')")
-    public ResponseEntity<UserProfile> getUserProfileById(@PathVariable UUID id) {
-        return new ResponseEntity<>(userProfileService.findById(id), HttpStatus.OK);
+    public ResponseEntity<UserProfileDTO> getUserProfileById(@PathVariable UUID id) {
+        return new ResponseEntity<>(userProfileMapper.toDto(null), HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("(hasAuthority('USER_PROFILE_MODIFY') && @userProfilePermissionEvaluator.userProfileEvaluator(authentication.principal.user,#id)) || hasAuthority('USER_PROFILE_LIST_READ')")
-    public ResponseEntity<UserProfile> updateUserProfile(@PathVariable UUID id,
+    public ResponseEntity<UserProfileDTO> updateUserProfile(@PathVariable UUID id,
             @Valid @RequestBody UserProfileDTO userProfileDTO) {
         return new ResponseEntity<>(
-                userProfileService.updateById(id, userProfileMapper.fromUserProfileDTO(userProfileDTO)),
+                userProfileMapper.toDto(userProfileService.updateById(id, userProfileMapper.fromUserProfileDTO(
+                        userProfileDTO))),
                 HttpStatus.OK);
     }
 
