@@ -13,7 +13,6 @@ import java.util.stream.Stream;
 
 @Service
 public class UserServiceImpl extends AbstractServiceImpl<User> implements UserService {
-
   private final PasswordEncoder passwordEncoder;
 
   @Autowired
@@ -25,8 +24,8 @@ public class UserServiceImpl extends AbstractServiceImpl<User> implements UserSe
   @Override
   public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
     return ((UserRepository) repository).findByEmail(email)
-                                        .map(UserDetailsImpl::new)
-                                        .orElseThrow(() -> new UsernameNotFoundException(email));
+        .map(UserDetailsImpl::new)
+        .orElseThrow(() -> new UsernameNotFoundException(email));
   }
 
   @Override
@@ -34,9 +33,11 @@ public class UserServiceImpl extends AbstractServiceImpl<User> implements UserSe
     user.setPassword(passwordEncoder.encode(user.getPassword()));
     return save(user);
   }
+
   @Override
-  //This Method can be used for development and testing. the Password for the user will be set to "1234"
-  public User registerUser(User user){
+  // This Method can be used for development and testing. the Password for the
+  // user will be set to "1234"
+  public User registerUser(User user) {
     user.setPassword(passwordEncoder.encode("1234"));
     return save(user);
   }
