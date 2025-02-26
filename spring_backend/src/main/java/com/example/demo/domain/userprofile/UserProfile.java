@@ -33,10 +33,7 @@ public class UserProfile extends AbstractEntity {
     @Transient
     private int age;
 
-    @PostPersist
     @PostLoad
-    @PostUpdate
-    @PostRemove
     public void calculateAge() {
         this.age = Period.between(birthDate, LocalDate.now()).getYears();
     }
@@ -59,16 +56,19 @@ public class UserProfile extends AbstractEntity {
     @PostPersist
     public void logNewUserProfile() {
         log.info("New user profile created with id: {}", this.getId());
+        this.calculateAge();
     }
 
     @PostUpdate
     public void logUserProfileUpdate() {
         log.info("User profile with id: {} updated", this.getId());
+        this.calculateAge();
     }
 
     @PostRemove
     public void logUserProfileRemoval() {
         log.info("User profile with id: {} removed", this.getId());
+        this.calculateAge();
     }
 
     public UserProfile(UUID id, String address, LocalDate birthDate, String profilePictureUrl) {
