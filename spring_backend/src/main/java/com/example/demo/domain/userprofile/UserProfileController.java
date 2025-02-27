@@ -43,7 +43,7 @@ public class UserProfileController {
     @GetMapping("/{id}")
     @PreAuthorize("(hasAuthority('USER_PROFILE_READ') && @userProfilePermissionEvaluator.userProfileEvaluator(authentication.principal.user,#id)) || hasAuthority('USER_PROFILE_LIST_READ')")
     public ResponseEntity<UserProfileDTO> getUserProfileById(@PathVariable UUID id) {
-        return new ResponseEntity<>(userProfileMapper.toDto(null), HttpStatus.OK);
+        return new ResponseEntity<>(userProfileMapper.toDto(userProfileService.findById(id)), HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
