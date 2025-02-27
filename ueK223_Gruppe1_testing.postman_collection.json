@@ -1,0 +1,1141 @@
+{
+	"info": {
+		"_postman_id": "f61e043a-f27a-49e6-bfb0-d10110ef536b",
+		"name": "ueK223_Gruppe1_testing",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "33450390"
+	},
+	"item": [
+		{
+			"name": "Admin",
+			"item": [
+				{
+					"name": "AdminLogin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Admin should receive jwt token\", function () {",
+									"    pm.expect(pm.response.headers.get('Authorization')).to.string",
+									"});",
+									"",
+									"var token = pm.response.headers.get('Authorization');",
+									"pm.environment.set(\"adminToken\", token);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"admin@example.com\",\n    \"password\": \"1234\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/user/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User List",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Admin successfully fetched UserProfiles\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"The response should contain an array of 3 UserProfiles\", function () {",
+									"     pm.expect(pm.response.json()).to.be.an('array').with.lengthOf(3);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/userprofile/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"userprofile",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User List with sorting params",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Admin successfully fetched UserProfiles\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"The response should contain an array of 1 UserProfile\", function () {",
+									"     pm.expect(pm.response.json()).to.be.an('array').with.lengthOf(1);",
+									"});",
+									"",
+									"pm.test(\"The respone should match the profile of Tyler Durden\", function () {",
+									"    const firstElement = pm.response.json()[0];",
+									"    pm.expect(firstElement).to.eql({",
+									"        \"id\": \"0d8fa44c-54fd-4cd0-ace9-2a7da57992de\",",
+									"        \"address\": \"1234 Main St, Springfield, IL 62701\",",
+									"        \"birthDate\": \"1990-01-01\",",
+									"        \"profilePictureUrl\": \"tyler_durden.jpg\",",
+									"        \"age\": 35",
+									"    });",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/userprofile/?page=0&size=1&sort=id,asc",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"userprofile",
+								""
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "1"
+								},
+								{
+									"key": "sort",
+									"value": "id,asc"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User List with descending order",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Admin successfully fetched UserProfiles\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"The response should contain an array of 1 UserProfile\", function () {",
+									"     pm.expect(pm.response.json()).to.be.an('array').with.lengthOf(1);",
+									"});",
+									"",
+									"pm.test(\"The respone should match the profile of Bond, James Bond\", function () {",
+									"    const firstElement = pm.response.json()[0];",
+									"    pm.expect(firstElement).to.eql({",
+									"        \"id\": \"ba804cb9-fa14-42a5-afaf-be488742fc54\",",
+									"        \"address\": \"1234 Main St, Springfield, IL 62701\",",
+									"        \"birthDate\": \"1990-01-01\",",
+									"        \"profilePictureUrl\": \"james_bond.jpg\",",
+									"        \"age\": 35",
+									"    });",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/userprofile/?page=0&size=1&sort=id,desc",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"userprofile",
+								""
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "1"
+								},
+								{
+									"key": "sort",
+									"value": "id,desc"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post User Profile",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Should return a 201 after creation\", function () {",
+									"    pm.response.to.have.status(201);",
+									"})",
+									"",
+									"pm.test(\"Should return the created UserProfile with a valid id\", function () {",
+									"    pm.expect(pm.response.json().id).to.be.a('string');",
+									"    pm.response.to.have.jsonBody('address', 'address');",
+									"    pm.response.to.have.jsonBody('birthDate', '2020-02-27');",
+									"    pm.response.to.have.jsonBody('profilePictureUrl', 'string');",
+									"    pm.response.to.have.jsonBody('age', 5);",
+									"})",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"address\": \"address\",\n  \"birthDate\": \"2020-02-27\",\n  \"profilePictureUrl\": \"string\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/userprofile",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"userprofile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post User Profile Wrong body",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response should have a 400 code\", function () {",
+									"    pm.expect(pm.response.code).to.equal(400);",
+									"});",
+									"",
+									"pm.test(\"Response should contain an error, that the Date could not be created from null\", function () {",
+									"     pm.expect(pm.response.text()).to.include('is null');",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"address\": \"123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/userprofile",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"userprofile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post User Profile optional fields",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response should have a 201 code\", function () {",
+									"    pm.expect(pm.response.code).to.equal(201);",
+									"});",
+									"",
+									"pm.test(\"Should return the created UserProfile with a valid id\", function () {",
+									"    pm.expect(pm.response.json().id).to.be.a('string');",
+									"    pm.response.to.have.jsonBody('address', 'address');",
+									"    pm.response.to.have.jsonBody('birthDate', '2020-02-27');",
+									"    pm.response.to.have.jsonBody('profilePictureUrl', 'string');",
+									"    pm.response.to.have.jsonBody('age', 5);",
+									"})",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\n  \"address\": \"address\",\n  \"birthDate\": \"2020-02-27\",\n  \"profilePictureUrl\": \"string\",\n  \"age\": 0\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/userprofile",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"userprofile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get user specific User Profile",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Admin successfully fetched UserProfile\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Verify the response body matches the expected structure\", function () {",
+									"    pm.response.to.not.be.undefined;",
+									"    var responseBody = pm.response.json();",
+									"    pm.expect(responseBody).to.eql({",
+									"        \"id\": \"ba804cb9-fa14-42a5-afaf-be488742fc54\",",
+									"        \"address\": \"1234 Main St, Springfield, IL 62701\",",
+									"        \"birthDate\": \"1990-01-01\",",
+									"        \"profilePictureUrl\": \"james_bond.jpg\",",
+									"        \"age\": 35",
+									"    });",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/userprofile/ba804cb9-fa14-42a5-afaf-be488742fc54",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"userprofile",
+								"ba804cb9-fa14-42a5-afaf-be488742fc54"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User Profile",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Should return a 200 after update\", function () {",
+									"    pm.response.to.have.status(200);",
+									"})",
+									"",
+									"pm.test(\"Should return the created UserProfile with a valid id\", function () {",
+									"    pm.expect(pm.response.json().id).to.be.a('string');",
+									"    pm.response.to.have.jsonBody('address', 'address');",
+									"    pm.response.to.have.jsonBody('birthDate', '2020-02-27');",
+									"    pm.response.to.have.jsonBody('profilePictureUrl', 'string');",
+									"    pm.response.to.have.jsonBody('age', 5);",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"address\": \"address\",\n    \"birthDate\": \"2020-02-27\",\n    \"profilePictureUrl\": \"string\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/userprofile/1d8fa44c-54fd-4cd0-ace9-2a7da57992de",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"userprofile",
+								"1d8fa44c-54fd-4cd0-ace9-2a7da57992de"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User Profile Malformed body",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response should have a 400 code\", function () {",
+									"    pm.expect(pm.response.code).to.equal(400);",
+									"});",
+									"",
+									"pm.test(\"Response should contain an error, that the Date could not be created from null\", function () {",
+									"     pm.expect(pm.response.text()).to.include('is null');",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJiYTgwNGNiOS1mYTE0LTQyYTUtYWZhZi1iZTQ4ODc0MmZjNTQiLCJhdXRob3JpdGllcyI6W3siYXV0aG9yaXR5IjoiVVNFUl9QUk9GSUxFX01PRElGWSJ9LHsiYXV0aG9yaXR5IjoiVVNFUl9ERUxFVEUifSx7ImF1dGhvcml0eSI6IlVTRVJfUFJPRklMRV9SRUFEIn0seyJhdXRob3JpdHkiOiJERUZBVUxUIn0seyJhdXRob3JpdHkiOiJVU0VSX1BST0ZJTEVfQ1JFQVRFIn0seyJhdXRob3JpdHkiOiJVU0VSX1BST0ZJTEVfTU9ESUZZIn0seyJhdXRob3JpdHkiOiJVU0VSX01PRElGWSJ9LHsiYXV0aG9yaXR5IjoiVVNFUl9QUk9GSUxFX1JFQUQifSx7ImF1dGhvcml0eSI6IlVTRVJfUFJPRklMRV9MSVNUX1JFQUQifV0sImlhdCI6MTc0MDY0NTUyOCwiZXhwIjoxNzQwNzQ1NTI4LCJpc3MiOiJ1azIyMyJ9.D6cSUNn_3bQWv0sSO2-CuQ2o87vVnAvvIsLM63wT9Pg4ao4_PEuGZ_YXD8amCkns",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"address\": \"address\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/userprofile/1d8fa44c-54fd-4cd0-ace9-2a7da57992de",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"userprofile",
+								"1d8fa44c-54fd-4cd0-ace9-2a7da57992de"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User Profile optional fields",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response should have a 200 code\", function () {",
+									"    pm.expect(pm.response.code).to.equal(200);",
+									"});",
+									"",
+									"pm.test(\"Should return the created UserProfile with a valid id\", function () {",
+									"    pm.expect(pm.response.json().id).to.be.a('string');",
+									"    pm.response.to.have.jsonBody('address', 'address');",
+									"    pm.response.to.have.jsonBody('birthDate', '2020-02-27');",
+									"    pm.response.to.have.jsonBody('profilePictureUrl', 'string');",
+									"    pm.response.to.have.jsonBody('age', 5);",
+									"})",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJiYTgwNGNiOS1mYTE0LTQyYTUtYWZhZi1iZTQ4ODc0MmZjNTQiLCJhdXRob3JpdGllcyI6W3siYXV0aG9yaXR5IjoiVVNFUl9QUk9GSUxFX01PRElGWSJ9LHsiYXV0aG9yaXR5IjoiVVNFUl9ERUxFVEUifSx7ImF1dGhvcml0eSI6IlVTRVJfUFJPRklMRV9SRUFEIn0seyJhdXRob3JpdHkiOiJERUZBVUxUIn0seyJhdXRob3JpdHkiOiJVU0VSX1BST0ZJTEVfQ1JFQVRFIn0seyJhdXRob3JpdHkiOiJVU0VSX1BST0ZJTEVfTU9ESUZZIn0seyJhdXRob3JpdHkiOiJVU0VSX01PRElGWSJ9LHsiYXV0aG9yaXR5IjoiVVNFUl9QUk9GSUxFX1JFQUQifSx7ImF1dGhvcml0eSI6IlVTRVJfUFJPRklMRV9MSVNUX1JFQUQifV0sImlhdCI6MTc0MDY0NTUyOCwiZXhwIjoxNzQwNzQ1NTI4LCJpc3MiOiJ1azIyMyJ9.D6cSUNn_3bQWv0sSO2-CuQ2o87vVnAvvIsLM63wT9Pg4ao4_PEuGZ_YXD8amCkns",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\n  \"address\": \"address\",\n  \"birthDate\": \"2020-02-27\",\n  \"profilePictureUrl\": \"string\",\n  \"age\": 0\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/userprofile/1d8fa44c-54fd-4cd0-ace9-2a7da57992de",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"userprofile",
+								"1d8fa44c-54fd-4cd0-ace9-2a7da57992de"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User Profile Unknown User Profile",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Should return a 404\", function () {",
+									"    pm.response.to.have.status(404);",
+									"})",
+									"",
+									"pm.test(\"Should return that the Element couldn't be found\", function () {",
+									"    pm.response.to.have.jsonBody(\"errors\", {",
+									"        \"element\": \"Element wurde nicht gefunden\"",
+									"    })",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"address\": \"address\",\n    \"birthDate\": \"2020-02-27\",\n    \"profilePictureUrl\": \"string\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/userprofile/{{$randomUUID}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"userprofile",
+								"{{$randomUUID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create User with User Profile",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Should return a 201 after creation\", function () {",
+									"    pm.response.to.have.status(201);",
+									"})",
+									"",
+									"var jsonData = pm.response.json();",
+									"var userID = jsonData.id;",
+									"var userProfileID = jsonData.userProfile.id;",
+									"",
+									"pm.collectionVariables.set(\"userID\", userID);",
+									"pm.collectionVariables.set(\"userProfileID\", userProfileID);",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\n  \"userProfile\": {\n    \"id\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\n    \"address\": \"string\",\n    \"birthDate\": \"2025-02-27\",\n    \"profilePictureUrl\": \"string\",\n    \"age\": 0\n  },\n  \"firstName\": \"string\",\n  \"lastName\": \"string\",\n  \"email\": \"string@asd.com\",\n  \"password\": \"string\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/user/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/user/{{userID}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user",
+								"{{userID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Ensure user Profile has been deleted",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Should return a 404\", function () {",
+									"    pm.response.to.have.status(404);",
+									"})",
+									"",
+									"pm.test(\"Should return that the Element couldn't be found\", function () {",
+									"    pm.response.to.have.jsonBody(\"errors\", {",
+									"        \"element\": \"Element wurde nicht gefunden\"",
+									"    })",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/userprofile/{{userProfileID}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"userprofile",
+								"{{userProfileID}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "User Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Admin should receive jwt token\", function () {",
+									"    pm.expect(pm.response.headers.get('Authorization')).to.string",
+									"});",
+									"",
+									"var token = pm.response.headers.get('Authorization');",
+									"pm.environment.set(\"userToken\", token);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"123@example.com\",\n    \"password\": \"1234\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/user/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get user list",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"User unsuccessfully fetched UserProfiles\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"pm.test(\"Should return that the Access was denied\", function () {",
+									"    pm.response.to.have.jsonBody(\"errors\", {",
+									"        \"runtimeException\": \"Access Denied\"",
+									"    })",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{userToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/userprofile/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"userprofile",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get users User Profile",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"User successfully fetched UserProfile\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Verify the response body matches the expected structure\", function () {",
+									"    pm.response.to.not.be.undefined;",
+									"    var responseBody = pm.response.json();",
+									"    pm.expect(responseBody).to.eql({",
+									"    \"id\": \"1d8fa44c-54fd-4cd0-ace9-2a7da57992de\",",
+									"    \"address\": \"address\",",
+									"    \"birthDate\": \"2020-02-27\",",
+									"    \"profilePictureUrl\": \"string\",",
+									"    \"age\": 5",
+									"    });",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{userToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/userprofile/1d8fa44c-54fd-4cd0-ace9-2a7da57992de",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"userprofile",
+								"1d8fa44c-54fd-4cd0-ace9-2a7da57992de"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get not users User Profile Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"User unsuccessfully fetched UserProfiles\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"pm.test(\"Should return that the Access was denied\", function () {",
+									"    pm.response.to.have.jsonBody(\"errors\", {",
+									"        \"runtimeException\": \"Access Denied\"",
+									"    })",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{userToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/userprofile/ba804cb9-fa14-42a5-afaf-be488742fc54",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"userprofile",
+								"ba804cb9-fa14-42a5-afaf-be488742fc54"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User Profile",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Should return a 200 after update\", function () {",
+									"    pm.response.to.have.status(200);",
+									"})",
+									"",
+									"pm.test(\"Should return the created UserProfile with a valid id\", function () {",
+									"    pm.expect(pm.response.json().id).to.be.a('string');",
+									"    pm.response.to.have.jsonBody('address', 'address');",
+									"    pm.response.to.have.jsonBody('birthDate', '2020-02-27');",
+									"    pm.response.to.have.jsonBody('profilePictureUrl', 'string');",
+									"    pm.response.to.have.jsonBody('age', 5);",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{userToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"address\": \"address\",\n    \"birthDate\": \"2020-02-27\",\n    \"profilePictureUrl\": \"string\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/userprofile/1d8fa44c-54fd-4cd0-ace9-2a7da57992de",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"userprofile",
+								"1d8fa44c-54fd-4cd0-ace9-2a7da57992de"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update not own User Profile",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"User unsuccessfully fetched UserProfiles\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"pm.test(\"Should return that the Access was denied\", function () {",
+									"    pm.response.to.have.jsonBody(\"errors\", {",
+									"        \"runtimeException\": \"Access Denied\"",
+									"    })",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{userToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"address\": \"address\",\n    \"birthDate\": \"2020-02-27\",\n    \"profilePictureUrl\": \"string\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/userprofile/ba804cb9-fa14-42a5-afaf-be488742fc54",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"userprofile",
+								"ba804cb9-fa14-42a5-afaf-be488742fc54"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{adminToken}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "adminToken",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "userID",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "userProfileID",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "userToken",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
