@@ -48,7 +48,6 @@ jobs:
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 2222
           source: "run.sh"
           target: "/tmp/run.sh"
@@ -62,7 +61,6 @@ jobs:
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 2222
           script: |
             chmod +x /tmp/run.sh
