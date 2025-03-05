@@ -21,17 +21,20 @@ jobs:
           java-version: "18"
 
       - name: Grant execute permissions for gradlew
-        run: chmod +x ~/spring_backend/gradlew
+        run: chmod +x ./gradlew
+        working-directory: spring_backend
 
       - name: Build with Gradle
-        run: ~/spring_backend/gradlew build
+        run: ./gradlew build
+        working-directory: spring_backend
 
       - name: Run Tests
-        run: ~/spring_backend/gradlew test
+        run: ./gradlew test
+        working-directory: spring_backend
 
       - name: Upload Test Results
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: test-results
-          path: build/reports/tests/test/
+          path: spring_backend/build/reports/tests/test/
