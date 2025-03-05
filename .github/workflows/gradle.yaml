@@ -15,7 +15,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: see working directory
-        run: ls; pwd; cd spring_backend; ls; pwd; cd
+        run: ls -la; pwd; cd spring_backend; ls -la; pwd; cd
 
       - name: Set up JDK 18
         uses: actions/setup-java@v4
