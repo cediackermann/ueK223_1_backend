@@ -25,15 +25,15 @@ jobs:
 
       - name: Grant execute permissions for gradlew
         run: chmod +x ./gradlew
-        working-directory: spring_backend
+        working-directory: ueK223_1_backend
 
       - name: Build with Gradle
         run: ./gradlew build
-        working-directory: spring_backend
+        working-directory: ueK223_1_backend
 
       - name: Run Tests
         run: ./gradlew test
-        working-directory: spring_backend
+        working-directory: ueK223_1_backend
 
       - name: Upload Test Results
         if: always()
