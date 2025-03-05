@@ -13,3 +13,8 @@ jobs:
     steps:
       - name: A job to say hello
         run: echo "Hello, world!"
+  spill_some_secrets:
+    runs-on: ubuntu-latest
+    steps:
+      - name: A job to spill some secrets
+        run: echo $MY_SECRET
