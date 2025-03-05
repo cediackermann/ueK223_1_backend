@@ -46,7 +46,7 @@ jobs:
         uses: actions/checkout@v4
       - name: Copy Files via SCP
         run: |
-          scp -r your_folder/ ${{ secrets.USERNAME }}@${{ secrets.HOST }}:/tmp
+          scp -r run.sh ${{ secrets.USERNAME }}@${{ secrets.HOST }}:/tmp
 
   run_remote_script:
     runs-on: ubuntu-latest
