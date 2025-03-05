@@ -15,7 +15,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: see working directory
-        run: ls; pwd; cd ueK223_1_backend; ls; pwd
+        run: ls; pwd; cd spring_backend; ls; pwd; cd
 
       - name: Set up JDK 18
         uses: actions/setup-java@v4
@@ -25,15 +25,15 @@ jobs:
 
       - name: Grant execute permissions for gradlew
         run: chmod +x ./gradlew
-        working-directory: ueK223_1_backend
+        working-directory: spring_backend
 
       - name: Build with Gradle
         run: ./gradlew build
-        working-directory: ueK223_1_backend
+        working-directory: spring_backend
 
       - name: Run Tests
         run: ./gradlew test
-        working-directory: ueK223_1_backend
+        working-directory: spring_backend
 
       - name: Upload Test Results
         if: always()
