@@ -21,13 +21,13 @@ jobs:
           java-version: "18"
 
       - name: Grant execute permissions for gradlew
-        run: chmod +x spring_backend/gradlew
+        run: chmod +x ~/spring_backend/gradlew
 
       - name: Build with Gradle
-        run: spring_backend/gradlew build
+        run: ~/spring_backend/gradlew build
 
       - name: Run Tests
-        run: ./spring_backend/gradlew test
+        run: ~/spring_backend/gradlew test
 
       - name: Upload Test Results
         if: always()
