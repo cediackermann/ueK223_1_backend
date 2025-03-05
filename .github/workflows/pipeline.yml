@@ -39,19 +39,6 @@ jobs:
           port: 2222
           script: echo “Hello World”
 
-  copy-to-remote:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
-      - name: Copy Files to Remote Server
-        uses: appleboy/scp-action@v0.1.4
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          source: "run.sh"
-          target: "/tmp/"
-
   run_remote_script:
     runs-on: ubuntu-latest
     steps:
@@ -64,5 +51,4 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           port: 2222
           script: |
-            chmod +x /tmp/run.sh
-            sh /tmp/run.sh
+            sh run.sh
