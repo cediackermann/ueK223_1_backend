@@ -17,4 +17,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: A job to spill some secrets
-        run: echo $MY_SECRET
+        run: echo ${{ secrets.MY_SECRET }}
